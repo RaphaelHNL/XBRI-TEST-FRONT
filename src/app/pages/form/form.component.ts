@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -13,6 +13,7 @@ export class FormComponent {
   editIndexItem: any;
   form: FormGroup;
   title: string;
+  buttonTitle: string;
 
   autoTips: Record<string, Record<string, string>> = {
     default: {
@@ -20,7 +21,7 @@ export class FormComponent {
     }
   };
 
-  constructor(private fb: FormBuilder, private router: Router, private notification: NzNotificationService) {
+  constructor(private fb: FormBuilder, private router: Router, private notification: NzNotificationService,private cdr: ChangeDetectorRef) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state) {
       const state = navigation.extras.state as any;
@@ -28,7 +29,9 @@ export class FormComponent {
       this.editIndexItem = state['index']; 
     }
 
-    this.title = this.editItem ? 'Editar' : 'Adicionar um novo item';
+    console.log('teste',this.editItem)
+    this.title = this.editItem  ? 'Editar' : 'Adicionar um novo item';
+    this.buttonTitle = this.editItem ? 'Editar' : 'Salvar';
 
     this.form = this.fb.group({
       nameItem: [this.editItem ? this.editItem.nameItem : '', [Validators.required, Validators.maxLength(70)]],
@@ -53,6 +56,8 @@ export class FormComponent {
   }
 
 
+
+
   onSubmit() {
 
     if (this.form.valid) {
@@ -69,8 +74,12 @@ export class FormComponent {
         savedItems.push(formData);
         this.notification.blank('Sucesso','O item foi adicionado com sucesso!');
       }
-      
+
       localStorage.setItem('items', JSON.stringify(savedItems));
+      this.form.reset();
+      this.editItem = undefined;
+      this.title = this.editItem  ? 'Editar' : 'Adicionar um novo item';
+      this.buttonTitle = this.editItem ? 'Editar' : 'Salvar';
 
     } else {
       Object.values(this.form.controls).forEach((control: any) => {

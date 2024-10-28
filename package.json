@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:github": "ng build --configuration production --base-href=/XBRI-TEST-FRONT/",
+    "ghpages": "angular-cli-ghpages --dir=dist/xbri-test",
+    "deploy": "npm run build:github && npm run ghpages"
   },
   "private": true,
   "dependencies": {

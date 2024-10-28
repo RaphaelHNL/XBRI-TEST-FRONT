@@ -1,0 +1,19 @@
+[nz-button] {
+    margin-right: 8px;
+    margin-bottom: 12px;
+}
+
+nz-form-control.item-active::ng-deep{
+  max-width: 32% !important;
+  margin: 0;
+  .ant-form-item-control-input{
+    .ant-form-item-control-input-content{
+      display: flex !important;
+      align-items: center !important;
+    }
+  }
+}
+
+nz-form-label.label-active{
+  max-width: 60% !important;
+}

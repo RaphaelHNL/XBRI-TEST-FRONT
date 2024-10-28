@@ -1,0 +1,63 @@
+<h1>{{title}}</h1>
+
+<form nz-form [formGroup]="form" [nzAutoTips]="autoTips">
+
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired nzFor="name">Nome do Item</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Faltou digitar o nome do item">
+      <input id="name" type="text" nz-input formControlName="nameItem" />
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzFor="categoria" nzRequired>Categoria</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Faltou selecionar a categoria">
+      <nz-select id="categoria" formControlName="categoria" nzPlaceHolder="Selecione a categoria">
+        <nz-option nzValue="Automóvel" nzLabel="Automóvel"></nz-option>
+        <nz-option nzValue="Caminhão" nzLabel="Caminhão"></nz-option>
+        <nz-option nzValue="Avião" nzLabel="Avião"></nz-option>
+
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+
+
+
+
+
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzFor="quantidade" [nzRequired]="form.get('ativo')?.value">Quantidade</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Faltou digitar a quantidade">
+      <input id="quantidade" type="number" nz-input formControlName="quantidade" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzFor="preco" [nzRequired]="form.get('ativo')?.value">Preço</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Faltou digitar o preço">
+      <input id="preco" currencyMask nz-input formControlName="preco"
+        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label class="label-active" [nzSpan]="5" nzRequired>O item está ativo?</nz-form-label>
+    <nz-form-control class="item-active" [nzSpan]="8" [nzOffset]="4" nzErrorTip="Faltou informar se está ativo">
+      <label nz-checkbox formControlName="ativo" nzRequired>
+      </label>
+    </nz-form-control>
+  </nz-form-item>
+
+
+
+  <nz-form-item>
+    <nz-form-control [nzSpan]="12" [nzOffset]="5">
+      <button type="submit" nz-button nzType="primary" (click)="onSubmit()">Salvar</button>
+      <button nz-button nzType="primary" nzDanger (click)="onCancel()">Cancelar</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

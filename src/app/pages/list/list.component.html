@@ -1,0 +1,56 @@
+
+  <h1>Listagem de itens</h1>
+  
+  <button style="margin-bottom: 20px;" nz-button nzType="primary" (click)="goToForm()">Adicionar um novo item</button>
+  <nz-table  #columnTable [nzData]="dataSet" [nzScroll]="{ x: '1100px' }">
+    <thead>
+      <tr>
+        <th nzLeft nzWidth="100px">Nome</th>
+        <th>Categoria</th>
+        <th>Quantidade</th>
+        <th>Preço</th>
+        <th>Ativo</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of columnTable.data; let i = index">
+        <td nzLeft >{{ data.nameItem ? data.nameItem : '-' }}</td>
+        <td>{{ data.categoria ? data.categoria : '-'  }}</td>
+        <td>{{ data.quantidade ? data.quantidade : '-'  }}</td>
+        <td>{{ data.preco ? (data.preco | currency:'BRL') : '-'  }}</td>
+        <td>{{ data.ativo ? 'Sim' : 'Não' }}</td>
+        <td>
+          <a (click)="editItem(data, i)">Editar</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="showModal(data,i)">Deletar</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+
+
+
+
+<nz-modal
+[(nzVisible)]="isVisible"
+nzTitle="Deletar"
+(nzOnCancel)="cancelModal()"
+[nzTitle]="modalTitle"
+[nzContent]="modalContent"
+[nzFooter]="modalFooter"
+>
+<ng-template #modalTitle>Deletar</ng-template>
+
+<ng-template #modalContent>
+  <p>Deseja deletar o item {{itemToDelete?.nameItem}}?</p>
+
+</ng-template>
+
+<ng-template #modalFooter>
+  <button nz-button nzType="default" (click)="deleteItem()">Excluir</button>
+  <button nz-button nzType="primary" (click)="cancelModal()">Cancelar</button>
+</ng-template>
+</nz-modal>
+
